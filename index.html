@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Neves Store | Peças e Hardware para PC</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Único CSS próprio: cursor nos cartões clicáveis */
+    .produto { cursor: pointer; }
+    .produto:hover { box-shadow: 0 .5rem 1rem rgba(0,0,0,.15); }
+    /* Fotos de produto: mesma altura, sem cortar nem esticar */
+    .produto .card-img-top { height: 220px; object-fit: contain; padding: .75rem; background: #fff; }
+    #modalImg { max-height: 320px; object-fit: contain; }
+    .banner-img { height: 150px; width: 45%; object-fit: contain; }
+    .carousel-slide { height: 240px; }
+    .carousel-slide img { height: 90%; max-width: 45%; object-fit: contain; }
+    @media (min-width: 768px) { .carousel-slide { height: 400px; } }
+  </style>
+</head>
+<body>
+
+  <!-- Faixa de aviso -->
+  <div class="bg-dark text-white text-center small py-1">
+    Frete grátis acima de R$ 199
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
+    <div class="container flex-wrap">
+      <a class="navbar-brand w-100 text-center fs-3 fw-bold me-0 mb-1" href="#">Neves Store</a>
+
+      <!-- Carrinho + hambúrguer (celular) -->
+      <div class="d-flex align-items-center order-lg-last gap-2 ms-auto">
+        <button class="btn btn-outline-dark position-relative" type="button" aria-label="Abrir carrinho" data-bs-toggle="offcanvas" data-bs-target="#carrinho">
+          🛒
+          <span id="contador" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+        </button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Abrir menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+
+      <!-- Busca em linha própria no celular -->
+      <form class="d-flex order-lg-2 col-12 col-lg-auto my-2 my-lg-0 mx-lg-3" role="search">
+        <input class="form-control me-2" type="search" placeholder="Buscar produtos..." aria-label="Buscar">
+        <button class="btn btn-dark" type="submit">Buscar</button>
+      </form>
+
+      <div class="collapse navbar-collapse order-lg-1" id="menu">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link active" href="#">Início</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categorias</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Processadores</a></li>
+              <li><a class="dropdown-item" href="#">Placas de vídeo</a></li>
+              <li><a class="dropdown-item" href="#">Memória RAM</a></li>
+              <li><a class="dropdown-item" href="#">Placas-mãe</a></li>
+              <li><a class="dropdown-item" href="#">SSDs e HDs</a></li>
+              <li><a class="dropdown-item" href="#">Fontes</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Ver todas</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#">Ofertas</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- Carrossel -->
+    <div id="carrossel" class="carousel slide mt-3" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carrossel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carrossel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carrossel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner rounded">
+        <div class="carousel-item active bg-dark">
+          <div class="carousel-slide d-flex align-items-center justify-content-center gap-3 gap-md-5 px-5 text-white">
+            <div>
+              <h2 class="h3 fw-bold mb-1">Placas de vídeo com até 20% OFF</h2>
+              <p class="mb-0 d-none d-sm-block">GeForce RTX 4060 8 GB</p>
+            </div>
+            <img src="img/rtx-4060.jpg" alt="Placa de vídeo GeForce RTX 4060 8 GB">
+          </div>
+        </div>
+        <div class="carousel-item bg-dark">
+          <div class="carousel-slide d-flex align-items-center justify-content-center gap-3 gap-md-5 px-5 text-white">
+            <div>
+              <h2 class="h3 fw-bold mb-1">Processadores para jogar e trabalhar</h2>
+              <p class="mb-0 d-none d-sm-block">Processador AMD Ryzen 5 5600</p>
+            </div>
+            <img src="img/ryzen-5-5600.jpg" alt="Processador Ryzen 5 5600">
+          </div>
+        </div>
+        <div class="carousel-item bg-dark">
+          <div class="carousel-slide d-flex align-items-center justify-content-center gap-3 gap-md-5 px-5 text-white">
+            <div>
+              <h2 class="h3 fw-bold mb-1">Monte seu PC peça por peça</h2>
+              <p class="mb-0 d-none d-sm-block">Fontes e componentes essenciais</p>
+            </div>
+            <img src="img/fonte-corsair-cx750.jpg" alt="Fonte Corsair CX750">
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carrossel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carrossel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Próximo</span>
+      </button>
+    </div>
+
+    <!-- Categorias: 3 por linha no celular (col-4), 6 no desktop (col-lg-2) -->
+    <section class="my-4">
+      <h2 class="h5 fw-bold mb-3">Categorias</h2>
+      <div class="row g-2 g-md-3">
+        <div class="col-4 col-lg-2"><div class="card text-center h-100"><div class="card-body p-2"><div class="fs-2">⚙️</div><small>Processadores</small></div></div></div>
+        <div class="col-4 col-lg-2"><div class="card text-center h-100"><div class="card-body p-2"><div class="fs-2">🎮</div><small>Placas de vídeo</small></div></div></div>
+        <div class="col-4 col-lg-2"><div class="card text-center h-100"><div class="card-body p-2"><div class="fs-2">🧩</div><small>Memória RAM</small></div></div></div>
+        <div class="col-4 col-lg-2"><div class="card text-center h-100"><div class="card-body p-2"><div class="fs-2">🔧</div><small>Placas-mãe</small></div></div></div>
+        <div class="col-4 col-lg-2"><div class="card text-center h-100"><div class="card-body p-2"><div class="fs-2">💽</div><small>SSDs e HDs</small></div></div></div>
+        <div class="col-4 col-lg-2"><div class="card text-center h-100"><div class="card-body p-2"><div class="fs-2">🔌</div><small>Fontes</small></div></div></div>
+      </div>
+    </section>
+
+    <!-- Destaques: 4 / 2 / 1 por linha -->
+    <section class="my-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h5 fw-bold m-0">Destaques</h2>
+        <a href="#" class="small text-secondary">Ver todos</a>
+      </div>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3">
+
+        <div class="col">
+          <div class="card h-100 produto" data-bs-toggle="modal" data-bs-target="#modalProduto"
+               data-nome="Processador Ryzen 5 5600" data-preco="R$ 749,90" data-desc="Processador de 6 núcleos e 12 threads, soquete AM4, frequência de até 4,4 GHz. Acompanha cooler." data-img="img/ryzen-5-5600.jpg">
+            <div class="position-relative">
+              <span class="badge text-bg-danger position-absolute top-0 start-0 m-2">Promoção</span>
+              <img src="img/ryzen-5-5600.jpg" class="card-img-top" alt="Processador Ryzen 5 5600">
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h3 class="h6 card-title">Processador Ryzen 5 5600</h3>
+              <p class="card-text small text-secondary">6 núcleos, 12 threads, até 4,4 GHz. Soquete AM4.</p>
+              <div class="mt-auto">
+                <del class="small text-secondary">R$ 899,90</del>
+                <div class="fw-bold fs-5 mb-2">R$ 749,90</div>
+                <button class="btn btn-dark w-100 btn-comprar">Adicionar ao carrinho</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card h-100 produto" data-bs-toggle="modal" data-bs-target="#modalProduto"
+               data-nome="Placa de Vídeo RTX 4060 8 GB" data-preco="R$ 2.099,90" data-desc="Placa de vídeo com 8 GB GDDR6, saídas HDMI e DisplayPort. Requer fonte de pelo menos 550 W." data-img="img/rtx-4060.jpg">
+            <div class="position-relative">
+              <img src="img/rtx-4060.jpg" class="card-img-top" alt="Placa de Vídeo RTX 4060 8 GB">
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h3 class="h6 card-title">Placa de Vídeo RTX 4060 8 GB</h3>
+              <p class="card-text small text-secondary">8 GB GDDR6, ideal para jogos em Full HD e QHD.</p>
+              <div class="mt-auto">
+                <div class="fw-bold fs-5 mb-2">R$ 2.099,90</div>
+                <button class="btn btn-dark w-100 btn-comprar">Adicionar ao carrinho</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card h-100 produto" data-bs-toggle="modal" data-bs-target="#modalProduto"
+               data-nome="Memória RAM DDR4 16 GB" data-preco="R$ 229,90" data-desc="Módulo de memória DDR4 de 16 GB a 3200 MHz, com dissipador de calor. Compatível com placas-mãe DDR4." data-img="img/memoria-ram.jpg">
+            <div class="position-relative">
+              <span class="badge text-bg-danger position-absolute top-0 start-0 m-2">Promoção</span>
+              <img src="img/memoria-ram.jpg" class="card-img-top" alt="Memória RAM DDR4 16 GB">
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h3 class="h6 card-title">Memória RAM DDR4 16 GB</h3>
+              <p class="card-text small text-secondary">3200 MHz, módulo único com dissipador.</p>
+              <div class="mt-auto">
+                <del class="small text-secondary">R$ 289,90</del>
+                <div class="fw-bold fs-5 mb-2">R$ 229,90</div>
+                <button class="btn btn-dark w-100 btn-comprar">Adicionar ao carrinho</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card h-100 produto" data-bs-toggle="modal" data-bs-target="#modalProduto"
+               data-nome="SSD NVMe 1 TB" data-preco="R$ 399,90" data-desc="SSD M.2 NVMe de 1 TB com leitura de até 3.500 MB/s. Exige slot M.2 compatível na placa-mãe." data-img="img/ssd-nvme.jpg">
+            <div class="position-relative">
+              <img src="img/ssd-nvme.jpg" class="card-img-top" alt="SSD NVMe 1 TB">
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h3 class="h6 card-title">SSD NVMe 1 TB</h3>
+              <p class="card-text small text-secondary">Leitura de até 3.500 MB/s, formato M.2.</p>
+              <div class="mt-auto">
+                <div class="fw-bold fs-5 mb-2">R$ 399,90</div>
+                <button class="btn btn-dark w-100 btn-comprar">Adicionar ao carrinho</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Banners 6 + 6 -->
+    <section class="my-4">
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+          <div class="border rounded bg-white d-flex align-items-center justify-content-between p-3 h-100">
+            <div>
+              <h3 class="h5 fw-bold mb-1">Upgrade de memória e SSD</h3>
+              <p class="text-secondary small mb-2">Mais velocidade para o seu PC.</p>
+              <a href="#" class="btn btn-dark btn-sm">Ver ofertas</a>
+            </div>
+            <img src="img/memoria-ram.jpg" class="banner-img" alt="Memória RAM DDR4 Corsair Vengeance">
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="border rounded bg-white d-flex align-items-center justify-content-between p-3 h-100">
+            <div>
+              <h3 class="h5 fw-bold mb-1">Fontes e gabinetes</h3>
+              <p class="text-secondary small mb-2">Energia estável para as suas peças.</p>
+              <a href="#" class="btn btn-dark btn-sm">Ver ofertas</a>
+            </div>
+            <img src="img/fonte-corsair-cx750.jpg" class="banner-img" alt="Fonte Corsair CX750">
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Benefícios 4 + 4 + 4 -->
+  <section class="bg-body-secondary py-4 my-4">
+    <div class="container">
+      <div class="row g-3">
+        <div class="col-12 col-md-4 d-flex align-items-center gap-3"><span class="fs-2">🚚</span><strong>Entrega para todo o Brasil</strong></div>
+        <div class="col-12 col-md-4 d-flex align-items-center gap-3"><span class="fs-2">🔒</span><strong>Pagamento seguro</strong></div>
+        <div class="col-12 col-md-4 d-flex align-items-center gap-3"><span class="fs-2">🔄</span><strong>Garantia de 12 meses</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="container text-center py-3">
+    <h2 class="h5 fw-bold">Receba nossas ofertas</h2>
+    <form class="mx-auto mt-3" style="max-width: 480px;">
+      <div class="input-group">
+        <input type="email" class="form-control" placeholder="seu e-mail" aria-label="E-mail">
+        <button class="btn btn-dark" type="submit">Assinar</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Rodapé 3 + 3 + 3 + 3 -->
+  <footer class="bg-secondary-subtle mt-4 pt-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-4 mb-3">
+          <h3 class="h6 fw-bold">Institucional</h3>
+          <ul class="list-unstyled small">
+            <li><a href="#" class="text-decoration-none text-secondary">Sobre nós</a></li>
+            <li><a href="#" class="text-decoration-none text-secondary">Política de privacidade</a></li>
+            <li><a href="#" class="text-decoration-none text-secondary">Trabalhe conosco</a></li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+          <h3 class="h6 fw-bold">Ajuda</h3>
+          <ul class="list-unstyled small">
+            <li><a href="#" class="text-decoration-none text-secondary">Como comprar</a></li>
+            <li><a href="#" class="text-decoration-none text-secondary">Trocas e devoluções</a></li>
+            <li><a href="#" class="text-decoration-none text-secondary">Fale conosco</a></li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+          <h3 class="h6 fw-bold">Formas de pagamento</h3>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="badge text-bg-light border">Visa</span>
+            <span class="badge text-bg-light border">Master</span>
+            <span class="badge text-bg-light border">Pix</span>
+            <span class="badge text-bg-light border">Boleto</span>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <p class="text-center small text-secondary pb-3 m-0">© 2026 Neves Store — CNPJ 00.000.000/0000-00</p>
+    </div>
+  </footer>
+
+  <!-- Carrinho -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="carrinho" aria-labelledby="carrinhoTitulo">
+    <div class="offcanvas-header border-bottom">
+      <h5 class="offcanvas-title" id="carrinhoTitulo">Seu carrinho</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+      <p id="carrinhoVazio" class="text-secondary">Seu carrinho está vazio.</p>
+      <ul id="listaCarrinho" class="list-group list-group-flush mb-3"></ul>
+      <div class="mt-auto">
+        <div class="d-flex justify-content-between fw-bold fs-5 mb-3">
+          <span>Total</span><span id="totalCarrinho">R$ 0,00</span>
+        </div>
+        <button type="button" class="btn btn-outline-secondary w-100" id="limparCarrinho">Limpar carrinho</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal do produto -->
+  <div class="modal fade" id="modalProduto" tabindex="-1" aria-labelledby="modalTitulo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitulo">Produto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <img id="modalImg" src="" class="img-fluid rounded mb-3 w-100" alt="">
+          <p class="fw-bold fs-4 mb-2" id="modalPreco"></p>
+          <p class="text-secondary mb-0" id="modalDesc"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-dark" id="modalAdd" data-bs-dismiss="modal">Adicionar ao carrinho</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const carrinho = [];            // itens: { nome, preco, qtd }
+    let produtoAberto = null;       // cartão cujo modal está aberto
+
+    const brl = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const paraNumero = txt => parseFloat(txt.replace(/[^\d,]/g, '').replace(',', '.'));
+
+    function adicionar(card) {
+      const nome = card.dataset.nome;
+      const item = carrinho.find(i => i.nome === nome);
+      if (item) item.qtd++;
+      else carrinho.push({ nome: nome, preco: paraNumero(card.dataset.preco), qtd: 1 });
+      atualizar();
+    }
+
+    function atualizar() {
+      const lista = document.getElementById('listaCarrinho');
+      lista.innerHTML = '';
+      let total = 0, qtdTotal = 0;
+      carrinho.forEach(function (item, idx) {
+        total += item.preco * item.qtd;
+        qtdTotal += item.qtd;
+        const li = document.createElement('li');
+        li.className = 'list-group-item d-flex justify-content-between align-items-center px-0';
+        const info = document.createElement('div');
+        const nome = document.createElement('div');
+        nome.className = 'fw-semibold';
+        nome.textContent = item.nome;
+        const det = document.createElement('small');
+        det.className = 'text-secondary';
+        det.textContent = item.qtd + ' x ' + brl(item.preco);
+        info.append(nome, det);
+        const rem = document.createElement('button');
+        rem.className = 'btn btn-sm btn-outline-danger';
+        rem.textContent = 'Remover';
+        rem.addEventListener('click', function () {
+          if (item.qtd > 1) item.qtd--; else carrinho.splice(idx, 1);
+          atualizar();
+        });
+        li.append(info, rem);
+        lista.appendChild(li);
+      });
+      document.getElementById('contador').textContent = qtdTotal;
+      document.getElementById('totalCarrinho').textContent = brl(total);
+      document.getElementById('carrinhoVazio').classList.toggle('d-none', carrinho.length > 0);
+      document.getElementById('limparCarrinho').disabled = carrinho.length === 0;
+    }
+
+    // Botão "Adicionar ao carrinho" do cartão (não abre o modal)
+    document.querySelectorAll('.btn-comprar').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        adicionar(btn.closest('.produto'));
+      });
+    });
+
+    // Modal: preenche com os dados do cartão clicado
+    document.getElementById('modalProduto').addEventListener('show.bs.modal', function (e) {
+      const card = e.relatedTarget;
+      if (!card) return;
+      produtoAberto = card;
+      document.getElementById('modalTitulo').textContent = card.dataset.nome;
+      document.getElementById('modalPreco').textContent = card.dataset.preco;
+      document.getElementById('modalDesc').textContent = card.dataset.desc;
+      const img = document.getElementById('modalImg');
+      img.src = card.dataset.img;
+      img.alt = card.dataset.nome;
+    });
+
+    // Botão "Adicionar ao carrinho" do modal
+    document.getElementById('modalAdd').addEventListener('click', function () {
+      if (produtoAberto) adicionar(produtoAberto);
+    });
+
+    document.getElementById('limparCarrinho').addEventListener('click', function () {
+      carrinho.length = 0;
+      atualizar();
+    });
+
+    atualizar();
+  </script>
+</body>
+</html>
